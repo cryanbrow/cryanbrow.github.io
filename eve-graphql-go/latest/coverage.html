@@ -312,10 +312,10 @@ func AllianceByID(id *int) (*model.Alliance, error) <span class="cov10" title="4
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="3">base_url := fmt.Sprintf("%s/alliances/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "AllianceByID:" + strconv.Itoa(*id)
+        redisKey := "AllianceByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return alliance, err
         }</span>
@@ -363,10 +363,10 @@ func CharacterByID(id *int) (*model.Character, error) <span class="cov10" title=
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="3">base_url := fmt.Sprintf("%s/characters/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "CharacterByID:" + strconv.Itoa(*id)
+        redisKey := "CharacterByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return character, err
         }</span>
@@ -414,10 +414,10 @@ func CorporationByID(id *int) (*model.Corporation, error) <span class="cov10" ti
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="3">base_url := fmt.Sprintf("%s/corporations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "CorporationByID:" + strconv.Itoa(*id)
+        redisKey := "CorporationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return corporation, err
         }</span>
@@ -465,10 +465,10 @@ func DogmaAttributeByID(id *int) (*model.DogmaAttributeDetail, error) <span clas
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="3">base_url := fmt.Sprintf("%s/dogma/attributes/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "DogmaAttributeByID:" + strconv.Itoa(*id)
+        redisKey := "DogmaAttributeByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return dogmaAttribute, err
         }</span>
@@ -487,10 +487,10 @@ func DogmaEffectByID(id *int) (*model.DogmaEffectDetail, error) <span class="cov
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="3">base_url := fmt.Sprintf("%s/dogma/effects/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "DogmaEffectByID:" + strconv.Itoa(*id)
+        redisKey := "DogmaEffectByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return dogmaEffect, err
         }</span>
@@ -540,10 +540,10 @@ func MarketGroupByID(id *int) (*model.MarketGroup, error) <span class="cov0" tit
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/markets/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "MarketGroupByID:" + strconv.Itoa(*id)
+        redisKey := "MarketGroupByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return marketGroup, err
         }</span>
@@ -561,7 +561,7 @@ func OrdersForRegion(regionID *int, orderType *model.Ordertype, typeID *int, pag
         orderList := make([]*model.Order, 0)
         base_url := fmt.Sprintf("%s/markets/%s/orders/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*regionID))
 
-        redis_key := "OrdersForRegion:" + strconv.Itoa(*regionID) + ":" + orderType.String()
+        redisKey := "OrdersForRegion:" + strconv.Itoa(*regionID) + ":" + orderType.String()
 
         query_params := make([]configuration.Key_value, 2)
         kv := new(configuration.Key_value)
@@ -570,15 +570,15 @@ func OrdersForRegion(regionID *int, orderType *model.Ordertype, typeID *int, pag
         query_params = append(query_params, *kv)
 
         if typeID != nil </span><span class="cov0" title="0">{
-                redis_key = redis_key + ":" + strconv.Itoa(*typeID)
+                redisKey = redisKey + ":" + strconv.Itoa(*typeID)
                 kv.Key = "type_id"
                 kv.Value = strconv.Itoa(*typeID)
                 query_params = append(query_params, *kv)
         }</span>
 
-        <span class="cov0" title="0">redis_key = redis_key + ":" + strconv.Itoa(*page)
+        <span class="cov0" title="0">redisKey = redisKey + ":" + strconv.Itoa(*page)
 
-        orderResult, pages, err := ordersForRegionREST(base_url, query_params, redis_key)
+        orderResult, pages, err := ordersForRegionREST(base_url, query_params, redisKey)
 
         if err == nil </span><span class="cov0" title="0">{
                 orderList = append(orderList, orderResult...)
@@ -611,11 +611,11 @@ func OrdersForRegionByName(region *string, orderType *model.Ordertype, typeName 
         <span class="cov0" title="0">return orders, nil</span>
 }
 
-func ordersForRegionREST(url string, additional_query_params []configuration.Key_value, redis_key string) ([]*model.Order, int, error) <span class="cov0" title="0">{
+func ordersForRegionREST(url string, additional_query_params []configuration.Key_value, redisKey string) ([]*model.Order, int, error) <span class="cov0" title="0">{
         var orders []*model.Order
         var pages = 0
         var buffer bytes.Buffer
-        responseBytes, header, err := rest_helper.MakeCachingRESTCall(url, http.MethodGet, buffer, additional_query_params, redis_key)
+        responseBytes, header, err := rest_helper.MakeCachingRESTCall(url, http.MethodGet, buffer, additional_query_params, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return orders, 0, err
         }</span>
@@ -636,10 +636,10 @@ func OrderHistory(regionID *int, typeID *int) ([]*model.OrderHistory, error) <sp
         }</span>
         <span class="cov0" title="0">var orderHistory []*model.OrderHistory = make([]*model.OrderHistory, 0)
         base_url := fmt.Sprintf("%s/markets/%s/history", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*regionID))
-        redis_key := "OrderHistoryByID:" + strconv.Itoa(*regionID) + ":" + strconv.Itoa(*typeID)
+        redisKey := "OrderHistoryByID:" + strconv.Itoa(*regionID) + ":" + strconv.Itoa(*typeID)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return orderHistory, err
         }</span>
@@ -711,11 +711,11 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7
 func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title="3">{
         var ancestries []*model.Ancestry = make([]*model.Ancestry, 0)
         var returnAncestry *model.Ancestry
-        var redis_key = "AncestryByID:" + strconv.Itoa(*id)
+        var redisKey = "AncestryByID:" + strconv.Itoa(*id)
         base_url := fmt.Sprintf("%s/universe/ancestries/", configuration.AppConfig.Esi.Default.Url)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -760,10 +760,10 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" 
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="5">base_url := fmt.Sprintf("%s/universe/asteroid_belts/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "AsteroidBeltByID:" + strconv.Itoa(*id)
+        redisKey := "AsteroidBeltByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return asteroidBelt, err
         }</span>
@@ -807,10 +807,10 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
         var bloodlines []*model.Bloodline = make([]*model.Bloodline, 0)
         var returnBloodline *model.Bloodline
         base_url := fmt.Sprintf("%s/universe/bloodlines/", configuration.AppConfig.Esi.Default.Url)
-        redis_key := "BloodlineByID"
+        redisKey := "BloodlineByID"
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -841,10 +841,10 @@ func CategoryByID(id *int) (*model.Category, error) <span class="cov7" title="4"
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov6" title="3">base_url := fmt.Sprintf("%s/universe/categories/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "CategoryByID:" + strconv.Itoa(*id)
+        redisKey := "CategoryByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return category, err
         }</span>
@@ -876,10 +876,10 @@ func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov10
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov8" title="5">base_url := fmt.Sprintf("%s/universe/constellations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "ConstellationByID:" + strconv.Itoa(*id)
+        redisKey := "ConstellationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return constellation, err
         }</span>
@@ -920,10 +920,10 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
         var factions []*model.Faction = make([]*model.Faction, 0)
         var returnFaction *model.Faction
         base_url := fmt.Sprintf("%s/universe/factions/", configuration.AppConfig.Esi.Default.Url)
-        redis_key := "FactionByID:" + strconv.Itoa(*id)
+        redisKey := "FactionByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -954,10 +954,10 @@ func GraphicByID(id *int) (*model.Graphic, error) <span class="cov7" title="4">{
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov6" title="3">base_url := fmt.Sprintf("%s/universe/graphics/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "GraphicByID:" + strconv.Itoa(*id)
+        redisKey := "GraphicByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return graphic, err
         }</span>
@@ -976,10 +976,10 @@ func GroupByID(id *int) (*model.Group, error) <span class="cov7" title="4">{
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov6" title="3">base_url := fmt.Sprintf("%s/universe/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "GroupByID:" + strconv.Itoa(*id)
+        redisKey := "GroupByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return group, err
         }</span>
@@ -998,7 +998,7 @@ func IdForName(name *string, name_type string) (int, error) <span class="cov0" t
         if name == nil </span><span class="cov0" title="0">{
                 return 0, errors.New("nil name")
         }</span>
-        <span class="cov0" title="0">redis_key := "IDForName:" + *name
+        <span class="cov0" title="0">redisKey := "IDForName:" + *name
         singleItemArray := []string{*name}
 
         var buf bytes.Buffer
@@ -1008,7 +1008,7 @@ func IdForName(name *string, name_type string) (int, error) <span class="cov0" t
                 return 0, err
         }</span>
 
-        <span class="cov0" title="0">responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodPost, buf, nil, redis_key)
+        <span class="cov0" title="0">responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodPost, buf, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return 0, err
         }</span>
@@ -1062,10 +1062,10 @@ func ItemTypeByID(id *int) (*model.ItemType, error) <span class="cov0" title="0"
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/types/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "ItemTypeByID:" + strconv.Itoa(*id)
+        redisKey := "ItemTypeByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return itemType, err
         }</span>
@@ -1097,10 +1097,10 @@ func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/moons/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "MoonByID:" + strconv.Itoa(*id)
+        redisKey := "MoonByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return moon, err
         }</span>
@@ -1119,10 +1119,10 @@ func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/planets/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "PlanetByID:" + strconv.Itoa(*id)
+        redisKey := "PlanetByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return planet, err
         }</span>
@@ -1165,10 +1165,10 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
         var returnRace *model.Race
         var headers http.Header = nil
         base_url := fmt.Sprintf("%s/universe/races/", configuration.AppConfig.Esi.Default.Url)
-        redis_key := "RaceByID:" + strconv.Itoa(*id)
+        redisKey := "RaceByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -1199,10 +1199,10 @@ func RegionByID(id *int) (*model.Region, error) <span class="cov0" title="0">{
                 return nil, nil
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/regions/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "RegionByID:" + strconv.Itoa(*id)
+        redisKey := "RegionByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return region, err
         }</span>
@@ -1221,10 +1221,10 @@ func StarByID(id *int) (*model.Star, error) <span class="cov0" title="0">{
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/stars/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "StarByID:" + strconv.Itoa(*id)
+        redisKey := "StarByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return star, err
         }</span>
@@ -1256,10 +1256,10 @@ func StargateByID(id *int) (*model.Stargate, error) <span class="cov0" title="0"
                 return nil, errors.New("nil id")
         }</span>
         <span class="cov0" title="0">base_url := fmt.Sprintf("%s/universe/stargates/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "StargateByID:" + strconv.Itoa(*id)
+        redisKey := "StargateByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return stargate, err
         }</span>
@@ -1294,10 +1294,10 @@ func StationByID(id *int) (*model.Station, error) <span class="cov0" title="0">{
         }</span>
         <span class="cov0" title="0">var station *model.Station = new(model.Station)
         base_url := fmt.Sprintf("%s/universe/stations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "StationByID:" + strconv.Itoa(*id)
+        redisKey := "StationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return station, err
         }</span>
@@ -1329,10 +1329,10 @@ func SystemByID(id *int) (*model.System, error) <span class="cov0" title="0">{
         }</span>
         <span class="cov0" title="0">var system *model.System = new(model.System)
         base_url := fmt.Sprintf("%s/universe/systems/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redis_key := "SystemByID:" + strconv.Itoa(*id)
+        redisKey := "SystemByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redis_key)
+        responseBytes, _, err := rest_helper.MakeCachingRESTCall(base_url, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return system, err
         }</span>
