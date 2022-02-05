@@ -329,7 +329,7 @@ func AllianceByID(id *int) (*model.Alliance, error) <span class="cov10" title="4
 }
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 
 var (
@@ -380,7 +380,7 @@ func CharacterByID(id *int) (*model.Character, error) <span class="cov10" title=
 }
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 
 var (
@@ -431,7 +431,7 @@ func CorporationByID(id *int) (*model.Corporation, error) <span class="cov10" ti
 }
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 
 var (
@@ -504,7 +504,7 @@ func DogmaEffectByID(id *int) (*model.DogmaEffectDetail, error) <span class="cov
 }
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 
 var (
@@ -611,11 +611,11 @@ func OrdersForRegionByName(region *string, orderType *model.Ordertype, typeName 
         <span class="cov0" title="0">return orders, nil</span>
 }
 
-func ordersForRegionREST(url string, additional_query_params []configuration.Key_value, redisKey string) ([]*model.Order, int, error) <span class="cov0" title="0">{
+func ordersForRegionREST(url string, additionalQueryParams []configuration.Key_value, redisKey string) ([]*model.Order, int, error) <span class="cov0" title="0">{
         var orders []*model.Order
         var pages = 0
         var buffer bytes.Buffer
-        responseBytes, header, err := restHelper.MakeCachingRESTCall(url, http.MethodGet, buffer, additional_query_params, redisKey)
+        responseBytes, header, err := restHelper.MakeCachingRESTCall(url, http.MethodGet, buffer, additionalQueryParams, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return orders, 0, err
         }</span>
@@ -653,7 +653,7 @@ func OrderHistory(regionID *int, typeID *int) ([]*model.OrderHistory, error) <sp
 }
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 
 var (
@@ -1361,7 +1361,7 @@ func SetupUniverseRest() <span class="cov0" title="0">{
 }</span>
 
 type RestHelper interface {
-        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
+        MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error)
 }
 </pre>
 		
@@ -1382,7 +1382,7 @@ import (
 type RestHelperClient struct {
 }
 
-func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additional_query_params []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error) <span class="cov7" title="8">{
+func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error) <span class="cov7" title="8">{
         inCache, result := Redis_client.CheckRedisCache(redisQueryKey)
         if !inCache </span><span class="cov7" title="7">{
                 crest_url, err := url.Parse(baseUrl)
@@ -1394,7 +1394,7 @@ func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body
                 for _, kv := range configuration.AppConfig.Esi.Default.Query_params </span><span class="cov10" title="15">{
                         queryParameters.Add(kv.Key, kv.Value)
                 }</span>
-                <span class="cov6" title="6">for _, kv := range additional_query_params </span><span class="cov4" title="3">{
+                <span class="cov6" title="6">for _, kv := range additionalQueryParams </span><span class="cov4" title="3">{
                         queryParameters.Add(kv.Key, kv.Value)
                 }</span>
 
