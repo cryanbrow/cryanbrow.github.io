@@ -309,7 +309,7 @@ import (
 func AllianceByID(id *int) (*model.Alliance, error) <span class="cov10" title="4">{
         var alliance *model.Alliance = new(model.Alliance)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="3">baseUrl := fmt.Sprintf("%s/alliances/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "AllianceByID:" + strconv.Itoa(*id)
@@ -360,7 +360,7 @@ import (
 func CharacterByID(id *int) (*model.Character, error) <span class="cov10" title="4">{
         var character *model.Character = new(model.Character)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="3">baseUrl := fmt.Sprintf("%s/characters/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "CharacterByID:" + strconv.Itoa(*id)
@@ -411,7 +411,7 @@ import (
 func CorporationByID(id *int) (*model.Corporation, error) <span class="cov10" title="4">{
         var corporation *model.Corporation = new(model.Corporation)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="3">baseUrl := fmt.Sprintf("%s/corporations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "CorporationByID:" + strconv.Itoa(*id)
@@ -462,7 +462,7 @@ import (
 func DogmaAttributeByID(id *int) (*model.DogmaAttributeDetail, error) <span class="cov10" title="4">{
         var dogmaAttribute *model.DogmaAttributeDetail = new(model.DogmaAttributeDetail)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="3">baseUrl := fmt.Sprintf("%s/dogma/attributes/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "DogmaAttributeByID:" + strconv.Itoa(*id)
@@ -484,7 +484,7 @@ func DogmaAttributeByID(id *int) (*model.DogmaAttributeDetail, error) <span clas
 func DogmaEffectByID(id *int) (*model.DogmaEffectDetail, error) <span class="cov10" title="4">{
         var dogmaEffect *model.DogmaEffectDetail = new(model.DogmaEffectDetail)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="3">baseUrl := fmt.Sprintf("%s/dogma/effects/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "DogmaEffectByID:" + strconv.Itoa(*id)
@@ -537,7 +537,7 @@ import (
 func MarketGroupByID(id *int) (*model.MarketGroup, error) <span class="cov0" title="0">{
         var marketGroup *model.MarketGroup = new(model.MarketGroup)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/markets/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "MarketGroupByID:" + strconv.Itoa(*id)
@@ -632,7 +632,7 @@ func ordersForRegionREST(url string, additionalQueryParams []configuration.Key_v
 
 func OrderHistory(regionID *int, typeID *int) ([]*model.OrderHistory, error) <span class="cov0" title="0">{
         if regionID == nil || typeID == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">var orderHistory []*model.OrderHistory = make([]*model.OrderHistory, 0)
         baseUrl := fmt.Sprintf("%s/markets/%s/history", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*regionID))
@@ -687,7 +687,7 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7
         var ancestry *model.Ancestry = new(model.Ancestry)
         var err error
         if id == nil </span><span class="cov4" title="2">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
 
         <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache("AncestryByID:" + strconv.Itoa(*id))
@@ -757,7 +757,7 @@ func AsteroidBeltDetails(asteroidBelts []*int) ([]*model.AsteroidBelt, error) <s
 func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" title="7">{
         var asteroidBelt *model.AsteroidBelt = new(model.AsteroidBelt)
         if id == nil </span><span class="cov4" title="2">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="5">baseUrl := fmt.Sprintf("%s/universe/asteroid_belts/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "AsteroidBeltByID:" + strconv.Itoa(*id)
@@ -838,7 +838,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
 func CategoryByID(id *int) (*model.Category, error) <span class="cov7" title="4">{
         var category *model.Category = new(model.Category)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov6" title="3">baseUrl := fmt.Sprintf("%s/universe/categories/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "CategoryByID:" + strconv.Itoa(*id)
@@ -873,7 +873,7 @@ func ConstellationsByIDs(ids []*int) ([]*model.Constellation, error) <span class
 func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov10" title="7">{
         var constellation *model.Constellation = new(model.Constellation)
         if id == nil </span><span class="cov4" title="2">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="5">baseUrl := fmt.Sprintf("%s/universe/constellations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "ConstellationByID:" + strconv.Itoa(*id)
@@ -895,7 +895,7 @@ func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov10
 func FactionByID(id *int) (*model.Faction, error) <span class="cov9" title="6">{
         var faction *model.Faction = new(model.Faction)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
 
         <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache("FactionByID:" + strconv.Itoa(*id))
@@ -951,7 +951,7 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
 func GraphicByID(id *int) (*model.Graphic, error) <span class="cov7" title="4">{
         var graphic *model.Graphic = new(model.Graphic)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov6" title="3">baseUrl := fmt.Sprintf("%s/universe/graphics/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "GraphicByID:" + strconv.Itoa(*id)
@@ -973,7 +973,7 @@ func GraphicByID(id *int) (*model.Graphic, error) <span class="cov7" title="4">{
 func GroupByID(id *int) (*model.Group, error) <span class="cov7" title="4">{
         var group *model.Group = new(model.Group)
         if id == nil </span><span class="cov1" title="1">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov6" title="3">baseUrl := fmt.Sprintf("%s/universe/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "GroupByID:" + strconv.Itoa(*id)
@@ -1059,7 +1059,7 @@ func ItemTypesByIDs(itemTypes []*int) ([]*model.ItemType, error) <span class="co
 func ItemTypeByID(id *int) (*model.ItemType, error) <span class="cov0" title="0">{
         var itemType *model.ItemType = new(model.ItemType)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/types/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "ItemTypeByID:" + strconv.Itoa(*id)
@@ -1094,7 +1094,7 @@ func MoonDetails(moons []*int) ([]*model.Moon, error) <span class="cov0" title="
 func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
         var moon *model.Moon = new(model.Moon)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/moons/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "MoonByID:" + strconv.Itoa(*id)
@@ -1116,7 +1116,7 @@ func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
 func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
         var planet *model.Planet = new(model.Planet)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/planets/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "PlanetByID:" + strconv.Itoa(*id)
@@ -1218,7 +1218,7 @@ func RegionByID(id *int) (*model.Region, error) <span class="cov0" title="0">{
 func StarByID(id *int) (*model.Star, error) <span class="cov0" title="0">{
         var star *model.Star = new(model.Star)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/stars/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "StarByID:" + strconv.Itoa(*id)
@@ -1253,7 +1253,7 @@ func StargateDetails(stargates []*int) ([]*model.Stargate, error) <span class="c
 func StargateByID(id *int) (*model.Stargate, error) <span class="cov0" title="0">{
         var stargate *model.Stargate = new(model.Stargate)
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/stargates/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "StargateByID:" + strconv.Itoa(*id)
@@ -1287,7 +1287,7 @@ func StationByArray(ids []*int) ([]*model.Station, error) <span class="cov0" tit
 
 func StationByID(id *int) (*model.Station, error) <span class="cov0" title="0">{
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">if *id &gt; 2147483647 </span><span class="cov0" title="0">{
                 return nil, nil
@@ -1325,7 +1325,7 @@ func SystemByArray(ids []*int) ([]*model.System, error) <span class="cov0" title
 
 func SystemByID(id *int) (*model.System, error) <span class="cov0" title="0">{
         if id == nil </span><span class="cov0" title="0">{
-                return nil, errors.New("nil id")
+                return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov0" title="0">var system *model.System = new(model.System)
         baseUrl := fmt.Sprintf("%s/universe/systems/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
