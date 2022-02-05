@@ -315,7 +315,7 @@ func AllianceByID(id *int) (*model.Alliance, error) <span class="cov10" title="4
         redisKey := "AllianceByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return alliance, err
         }</span>
@@ -333,11 +333,11 @@ type RestHelper interface {
 }
 
 var (
-        rest_helper RestHelper
+        restHelper RestHelper
 )
 
 func SetupAllianceRest() <span class="cov0" title="0">{
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 </pre>
 		
@@ -366,7 +366,7 @@ func CharacterByID(id *int) (*model.Character, error) <span class="cov10" title=
         redisKey := "CharacterByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return character, err
         }</span>
@@ -384,11 +384,11 @@ type RestHelper interface {
 }
 
 var (
-        rest_helper RestHelper
+        restHelper RestHelper
 )
 
 func SetupCharacterRest() <span class="cov0" title="0">{
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 </pre>
 		
@@ -417,7 +417,7 @@ func CorporationByID(id *int) (*model.Corporation, error) <span class="cov10" ti
         redisKey := "CorporationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return corporation, err
         }</span>
@@ -435,11 +435,11 @@ type RestHelper interface {
 }
 
 var (
-        rest_helper RestHelper
+        restHelper RestHelper
 )
 
 func SetupCorporationRest() <span class="cov0" title="0">{
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 </pre>
 		
@@ -468,7 +468,7 @@ func DogmaAttributeByID(id *int) (*model.DogmaAttributeDetail, error) <span clas
         redisKey := "DogmaAttributeByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return dogmaAttribute, err
         }</span>
@@ -490,7 +490,7 @@ func DogmaEffectByID(id *int) (*model.DogmaEffectDetail, error) <span class="cov
         redisKey := "DogmaEffectByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return dogmaEffect, err
         }</span>
@@ -508,11 +508,11 @@ type RestHelper interface {
 }
 
 var (
-        rest_helper RestHelper
+        restHelper RestHelper
 )
 
 func SetupDogmaRest() <span class="cov0" title="0">{
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 </pre>
 		
@@ -543,7 +543,7 @@ func MarketGroupByID(id *int) (*model.MarketGroup, error) <span class="cov0" tit
         redisKey := "MarketGroupByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return marketGroup, err
         }</span>
@@ -615,7 +615,7 @@ func ordersForRegionREST(url string, additional_query_params []configuration.Key
         var orders []*model.Order
         var pages = 0
         var buffer bytes.Buffer
-        responseBytes, header, err := rest_helper.MakeCachingRESTCall(url, http.MethodGet, buffer, additional_query_params, redisKey)
+        responseBytes, header, err := restHelper.MakeCachingRESTCall(url, http.MethodGet, buffer, additional_query_params, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return orders, 0, err
         }</span>
@@ -639,7 +639,7 @@ func OrderHistory(regionID *int, typeID *int) ([]*model.OrderHistory, error) <sp
         redisKey := "OrderHistoryByID:" + strconv.Itoa(*regionID) + ":" + strconv.Itoa(*typeID)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return orderHistory, err
         }</span>
@@ -657,11 +657,11 @@ type RestHelper interface {
 }
 
 var (
-        rest_helper RestHelper
+        restHelper RestHelper
 )
 
 func SetupMarketRest() <span class="cov0" title="0">{
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 </pre>
 		
@@ -715,7 +715,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title=
         baseUrl := fmt.Sprintf("%s/universe/ancestries/", configuration.AppConfig.Esi.Default.Url)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -763,7 +763,7 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" 
         redisKey := "AsteroidBeltByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return asteroidBelt, err
         }</span>
@@ -810,7 +810,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
         redisKey := "BloodlineByID"
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -844,7 +844,7 @@ func CategoryByID(id *int) (*model.Category, error) <span class="cov7" title="4"
         redisKey := "CategoryByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return category, err
         }</span>
@@ -879,7 +879,7 @@ func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov10
         redisKey := "ConstellationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return constellation, err
         }</span>
@@ -923,7 +923,7 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
         redisKey := "FactionByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
@@ -957,7 +957,7 @@ func GraphicByID(id *int) (*model.Graphic, error) <span class="cov7" title="4">{
         redisKey := "GraphicByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return graphic, err
         }</span>
@@ -979,7 +979,7 @@ func GroupByID(id *int) (*model.Group, error) <span class="cov7" title="4">{
         redisKey := "GroupByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov1" title="1">{
                 return group, err
         }</span>
@@ -1008,7 +1008,7 @@ func IdForName(name *string, name_type string) (int, error) <span class="cov0" t
                 return 0, err
         }</span>
 
-        <span class="cov0" title="0">responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodPost, buf, nil, redisKey)
+        <span class="cov0" title="0">responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodPost, buf, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return 0, err
         }</span>
@@ -1065,7 +1065,7 @@ func ItemTypeByID(id *int) (*model.ItemType, error) <span class="cov0" title="0"
         redisKey := "ItemTypeByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return itemType, err
         }</span>
@@ -1100,7 +1100,7 @@ func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
         redisKey := "MoonByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return moon, err
         }</span>
@@ -1122,7 +1122,7 @@ func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
         redisKey := "PlanetByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return planet, err
         }</span>
@@ -1168,7 +1168,7 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
         redisKey := "RaceByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, headers, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
@@ -1202,7 +1202,7 @@ func RegionByID(id *int) (*model.Region, error) <span class="cov0" title="0">{
         redisKey := "RegionByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return region, err
         }</span>
@@ -1224,7 +1224,7 @@ func StarByID(id *int) (*model.Star, error) <span class="cov0" title="0">{
         redisKey := "StarByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return star, err
         }</span>
@@ -1259,7 +1259,7 @@ func StargateByID(id *int) (*model.Stargate, error) <span class="cov0" title="0"
         redisKey := "StargateByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return stargate, err
         }</span>
@@ -1297,7 +1297,7 @@ func StationByID(id *int) (*model.Station, error) <span class="cov0" title="0">{
         redisKey := "StationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return station, err
         }</span>
@@ -1332,7 +1332,7 @@ func SystemByID(id *int) (*model.System, error) <span class="cov0" title="0">{
         redisKey := "SystemByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
-        responseBytes, _, err := rest_helper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
+        responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
         if err != nil </span><span class="cov0" title="0">{
                 return system, err
         }</span>
@@ -1352,12 +1352,12 @@ type RedisClient interface {
 
 var (
         Redis_client RedisClient
-        rest_helper  RestHelper
+        restHelper   RestHelper
 )
 
 func SetupUniverseRest() <span class="cov0" title="0">{
         Redis_client = &amp;caching.Client{}
-        rest_helper = &amp;helpers.RestHelperClient{}
+        restHelper = &amp;helpers.RestHelperClient{}
 }</span>
 
 type RestHelper interface {
