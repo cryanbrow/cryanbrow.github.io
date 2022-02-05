@@ -587,11 +587,11 @@ func OrdersForRegion(regionID *int, orderType *model.Ordertype, typeID *int, pag
                 println(err)
         }</span>
 
-        <span class="cov0" title="0">return_orders := new(model.OrderWrapper)
-        return_orders.List = orderList
-        return_orders.Xpages = &amp;pages
+        <span class="cov0" title="0">returnOrders := new(model.OrderWrapper)
+        returnOrders.List = orderList
+        returnOrders.Xpages = &amp;pages
 
-        return return_orders, nil</span>
+        return returnOrders, nil</span>
 }
 
 func OrdersForRegionByName(region *string, orderType *model.Ordertype, typeName *string, page *int) (*model.OrderWrapper, error) <span class="cov0" title="0">{
