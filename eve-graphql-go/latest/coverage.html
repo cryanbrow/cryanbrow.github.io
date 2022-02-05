@@ -231,8 +231,8 @@ type Config struct {
         } `yaml:"redis"`
         Esi struct {
                 Default struct {
-                        Query_params []Key_value `yaml:"query_params"`
-                        Url          string      `yaml:"url"`
+                        QueryParams []Key_value `yaml:"queryParams"`
+                        Url         string      `yaml:"url"`
                 } `yaml:"default"`
         } `yaml:"esi"`
 }
@@ -563,22 +563,22 @@ func OrdersForRegion(regionID *int, orderType *model.Ordertype, typeID *int, pag
 
         redisKey := "OrdersForRegion:" + strconv.Itoa(*regionID) + ":" + orderType.String()
 
-        query_params := make([]configuration.Key_value, 2)
+        queryParams := make([]configuration.Key_value, 2)
         kv := new(configuration.Key_value)
         kv.Key = "page"
         kv.Value = strconv.Itoa(*page)
-        query_params = append(query_params, *kv)
+        queryParams = append(queryParams, *kv)
 
         if typeID != nil </span><span class="cov0" title="0">{
                 redisKey = redisKey + ":" + strconv.Itoa(*typeID)
                 kv.Key = "type_id"
                 kv.Value = strconv.Itoa(*typeID)
-                query_params = append(query_params, *kv)
+                queryParams = append(queryParams, *kv)
         }</span>
 
         <span class="cov0" title="0">redisKey = redisKey + ":" + strconv.Itoa(*page)
 
-        orderResult, pages, err := ordersForRegionREST(baseUrl, query_params, redisKey)
+        orderResult, pages, err := ordersForRegionREST(baseUrl, queryParams, redisKey)
 
         if err == nil </span><span class="cov0" title="0">{
                 orderList = append(orderList, orderResult...)
@@ -1391,7 +1391,7 @@ func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body
                         return nil, nil, err
                 }</span>
                 <span class="cov6" title="6">queryParameters := crest_url.Query()
-                for _, kv := range configuration.AppConfig.Esi.Default.Query_params </span><span class="cov10" title="15">{
+                for _, kv := range configuration.AppConfig.Esi.Default.QueryParams </span><span class="cov10" title="15">{
                         queryParameters.Add(kv.Key, kv.Value)
                 }</span>
                 <span class="cov6" title="6">for _, kv := range additionalQueryParams </span><span class="cov4" title="3">{
