@@ -683,6 +683,10 @@ import (
         log "github.com/sirupsen/logrus"
 )
 
+const ancestryRedisKey string = "AncestryByID:"
+const asteroidBeltRedisKey string = "AsteroidBeltByID:"
+const bloodlineRedisKey string = "BloodlineByID:"
+
 func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7">{
         var ancestry *model.Ancestry = new(model.Ancestry)
         var err error
@@ -690,7 +694,7 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7
                 return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache("AncestryByID:" + strconv.Itoa(*id))
+        <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache(ancestryRedisKey + strconv.Itoa(*id))
         if !inCache </span><span class="cov6" title="3">{
                 ancestry, err = ancestryByArray(id)
                 if err != nil </span><span class="cov4" title="2">{
@@ -711,7 +715,7 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7
 func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title="3">{
         var ancestries []*model.Ancestry = make([]*model.Ancestry, 0)
         var returnAncestry *model.Ancestry
-        var redisKey = "AncestryByID:" + strconv.Itoa(*id)
+        var redisKey = ancestryRedisKey + strconv.Itoa(*id)
         baseUrl := fmt.Sprintf("%s/universe/ancestries/", configuration.AppConfig.Esi.Default.Url)
 
         var buffer bytes.Buffer
@@ -732,7 +736,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title=
                 }</span>
                 <span class="cov1" title="1">ancestryBytes, err := json.Marshal(*ancestry)
                 if err == nil </span><span class="cov1" title="1">{
-                        Redis_client.AddToRedisCache("AncestryByID:"+strconv.Itoa(*ancestry.ID), ancestryBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        Redis_client.AddToRedisCache(ancestryRedisKey+strconv.Itoa(*ancestry.ID), ancestryBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
@@ -760,7 +764,7 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" 
                 return nil, errors.New(helpers.NilId)
         }</span>
         <span class="cov8" title="5">baseUrl := fmt.Sprintf("%s/universe/asteroid_belts/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
-        redisKey := "AsteroidBeltByID:" + strconv.Itoa(*id)
+        redisKey := asteroidBeltRedisKey + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
@@ -785,7 +789,7 @@ func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov8" title="
                 return nil, nil
         }</span>
 
-        <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache("BloodlineByID:" + strconv.Itoa(*id))
+        <span class="cov8" title="5">inCache, result := Redis_client.CheckRedisCache(bloodlineRedisKey + strconv.Itoa(*id))
         if !inCache </span><span class="cov6" title="3">{
                 bloodline, err = bloodlineByArray(id)
                 if err != nil </span><span class="cov4" title="2">{
@@ -807,7 +811,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
         var bloodlines []*model.Bloodline = make([]*model.Bloodline, 0)
         var returnBloodline *model.Bloodline
         baseUrl := fmt.Sprintf("%s/universe/bloodlines/", configuration.AppConfig.Esi.Default.Url)
-        redisKey := "BloodlineByID"
+        redisKey := bloodlineRedisKey
 
         var buffer bytes.Buffer
         responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
@@ -827,7 +831,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
                 }</span>
                 <span class="cov1" title="1">bloodlineBytes, err := json.Marshal(*bloodline)
                 if err == nil </span><span class="cov1" title="1">{
-                        Redis_client.AddToRedisCache("BloodlineByID:"+strconv.Itoa(*bloodline.BloodlineID), bloodlineBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        Redis_client.AddToRedisCache(bloodlineRedisKey+strconv.Itoa(*bloodline.BloodlineID), bloodlineBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
