@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (58.3%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (63.4%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -1084,39 +1084,39 @@ func ItemTypesByIDs(itemTypes []*int) ([]*model.ItemType, error) <span class="co
         <span class="cov1" title="1">return itemTypeDetails, nil</span>
 }
 
-func MoonDetails(moons []*int) ([]*model.Moon, error) <span class="cov0" title="0">{
+func MoonDetails(moons []*int) ([]*model.Moon, error) <span class="cov3" title="2">{
         moonDetails := make([]*model.Moon, 0)
-        for _, element := range moons </span><span class="cov0" title="0">{
+        for _, element := range moons </span><span class="cov4" title="3">{
                 moon, err := MoonByID(element)
-                if err == nil </span><span class="cov0" title="0">{
+                if err == nil </span><span class="cov3" title="2">{
                         moonDetails = append(moonDetails, moon)
-                }</span> else<span class="cov0" title="0"> {
+                }</span> else<span class="cov1" title="1"> {
                         return nil, err
                 }</span>
         }
-        <span class="cov0" title="0">return moonDetails, nil</span>
+        <span class="cov1" title="1">return moonDetails, nil</span>
 }
 
-func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
+func MoonByID(id *int) (*model.Moon, error) <span class="cov7" title="7">{
         var moon *model.Moon = new(model.Moon)
-        if id == nil </span><span class="cov0" title="0">{
+        if id == nil </span><span class="cov3" title="2">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/moons/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov6" title="5">baseUrl := fmt.Sprintf("%s/universe/moons/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "MoonByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return moon, err
         }</span>
 
-        <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;moon); err != nil </span><span class="cov0" title="0">{
+        <span class="cov5" title="4">if err := json.Unmarshal(responseBytes, &amp;moon); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return moon, err
         }</span>
 
-        <span class="cov0" title="0">return moon, nil</span>
+        <span class="cov4" title="3">return moon, nil</span>
 }
 
 func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
