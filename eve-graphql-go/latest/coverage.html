@@ -686,6 +686,8 @@ import (
 const ancestryRedisKey string = "AncestryByID:"
 const asteroidBeltRedisKey string = "AsteroidBeltByID:"
 const bloodlineRedisKey string = "BloodlineByID:"
+const factionRedisKey string = "FactionByID:"
+const raceRedisKey string = "RaceByID:"
 
 func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov9" title="6">{
         var ancestry *model.Ancestry = new(model.Ancestry)
@@ -704,7 +706,7 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov9" title="6"
                 }</span>
         } else<span class="cov4" title="2"> {
                 if err := json.Unmarshal(result, &amp;ancestry); err != nil </span><span class="cov1" title="1">{
-                        log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                        log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                         return ancestry, err
                 }</span> else<span class="cov1" title="1"> {
                         return ancestry, nil
@@ -725,7 +727,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title=
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;ancestries); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return nil, err
         }</span>
         <span class="cov1" title="1">for _, ancestry := range ancestries </span><span class="cov1" title="1">{
@@ -738,7 +740,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title=
                 if err == nil </span><span class="cov1" title="1">{
                         RedisClient.AddToRedisCache(ancestryRedisKey+strconv.Itoa(*ancestry.ID), ancestryBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
-                        log.Errorf("Failure Marshalling: %v", err)
+                        log.Errorf(helpers.FailureMarshaling, err)
                 }</span>
         }
         <span class="cov1" title="1">return returnAncestry, nil</span>
@@ -774,7 +776,7 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" 
         <span class="cov7" title="4">log.Debug(string(responseBytes))
 
         if err := json.Unmarshal(responseBytes, &amp;asteroidBelt); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return asteroidBelt, err
         }</span>
         <span class="cov6" title="3">log.Debug(*asteroidBelt.Name)
@@ -799,7 +801,7 @@ func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov9" title="
                 }</span>
         } else<span class="cov4" title="2"> {
                 if err := json.Unmarshal(result, &amp;bloodline); err != nil </span><span class="cov1" title="1">{
-                        log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                        log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                         return bloodline, err
                 }</span> else<span class="cov1" title="1"> {
                         return bloodline, nil
@@ -820,7 +822,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;bloodlines); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return nil, err
         }</span>
         <span class="cov1" title="1">for _, bloodline := range bloodlines </span><span class="cov1" title="1">{
@@ -833,7 +835,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
                 if err == nil </span><span class="cov1" title="1">{
                         RedisClient.AddToRedisCache(bloodlineRedisKey+strconv.Itoa(*bloodline.BloodlineID), bloodlineBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
-                        log.Errorf("Failure Marshalling: %v", err)
+                        log.Errorf(helpers.FailureMarshaling, err)
                 }</span>
         }
         <span class="cov1" title="1">return returnBloodline, nil</span>
@@ -854,7 +856,7 @@ func CategoryByID(id *int) (*model.Category, error) <span class="cov7" title="4"
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;category); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return category, err
         }</span>
 
@@ -889,7 +891,7 @@ func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov10
         }</span>
 
         <span class="cov7" title="4">if err := json.Unmarshal(responseBytes, &amp;constellation); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return constellation, err
         }</span>
 
@@ -902,7 +904,7 @@ func FactionByID(id *int) (*model.Faction, error) <span class="cov9" title="6">{
                 return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov8" title="5">inCache, result := RedisClient.CheckRedisCache("FactionByID:" + strconv.Itoa(*id))
+        <span class="cov8" title="5">inCache, result := RedisClient.CheckRedisCache(factionRedisKey + strconv.Itoa(*id))
         if !inCache </span><span class="cov6" title="3">{
                 faction, err := factionByArray(id)
                 if err != nil </span><span class="cov4" title="2">{
@@ -912,7 +914,7 @@ func FactionByID(id *int) (*model.Faction, error) <span class="cov9" title="6">{
                 }</span>
         } else<span class="cov4" title="2"> {
                 if err := json.Unmarshal(result, &amp;faction); err != nil </span><span class="cov1" title="1">{
-                        log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                        log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                         return faction, err
                 }</span> else<span class="cov1" title="1"> {
                         return faction, nil
@@ -924,7 +926,7 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
         var factions []*model.Faction = make([]*model.Faction, 0)
         var returnFaction *model.Faction
         baseUrl := fmt.Sprintf("%s/universe/factions/", configuration.AppConfig.Esi.Default.Url)
-        redisKey := "FactionByID:" + strconv.Itoa(*id)
+        redisKey := factionRedisKey + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
@@ -933,7 +935,7 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;factions); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return nil, err
         }</span>
         <span class="cov1" title="1">for _, faction := range factions </span><span class="cov1" title="1">{
@@ -944,9 +946,9 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
                 }</span>
                 <span class="cov1" title="1">factionBytes, err := json.Marshal(*faction)
                 if err == nil </span><span class="cov1" title="1">{
-                        RedisClient.AddToRedisCache("FactionByID:"+strconv.Itoa(*faction.FactionID), factionBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache(factionRedisKey+strconv.Itoa(*faction.FactionID), factionBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
-                        log.Errorf("Failure Marshalling: %v", err)
+                        log.Errorf(helpers.FailureMarshaling, err)
                 }</span>
         }
         <span class="cov1" title="1">return returnFaction, nil</span>
@@ -967,7 +969,7 @@ func GraphicByID(id *int) (*model.Graphic, error) <span class="cov7" title="4">{
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;graphic); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return graphic, err
         }</span>
 
@@ -989,7 +991,7 @@ func GroupByID(id *int) (*model.Group, error) <span class="cov7" title="4">{
         }</span>
 
         <span class="cov4" title="2">if err := json.Unmarshal(responseBytes, &amp;group); err != nil </span><span class="cov1" title="1">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return group, err
         }</span>
 
@@ -1018,7 +1020,7 @@ func IdForName(name *string, nameType string) (int, error) <span class="cov0" ti
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;ids); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"name": *name}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"name": *name}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return 0, err
         }</span>
 
@@ -1075,7 +1077,7 @@ func ItemTypeByID(id *int) (*model.ItemType, error) <span class="cov0" title="0"
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;itemType); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return itemType, err
         }</span>
 
@@ -1110,7 +1112,7 @@ func MoonByID(id *int) (*model.Moon, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;moon); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return moon, err
         }</span>
 
@@ -1132,7 +1134,7 @@ func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;planet); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return planet, err
         }</span>
 
@@ -1146,7 +1148,7 @@ func RaceByID(id *int) (*model.Race, error) <span class="cov0" title="0">{
                 return nil, nil
         }</span>
 
-        <span class="cov0" title="0">inCache, result := RedisClient.CheckRedisCache("RaceByID:" + strconv.Itoa(*id))
+        <span class="cov0" title="0">inCache, result := RedisClient.CheckRedisCache(raceRedisKey + strconv.Itoa(*id))
         if !inCache </span><span class="cov0" title="0">{
                 race, err = raceByArray(id)
                 if err != nil </span><span class="cov0" title="0">{
@@ -1156,7 +1158,7 @@ func RaceByID(id *int) (*model.Race, error) <span class="cov0" title="0">{
                 }</span>
         } else<span class="cov0" title="0"> {
                 if err := json.Unmarshal(result, &amp;race); err != nil </span><span class="cov0" title="0">{
-                        log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                        log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                         return race, err
                 }</span> else<span class="cov0" title="0"> {
                         return race, nil
@@ -1169,7 +1171,7 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
         var returnRace *model.Race
         var headers http.Header = nil
         baseUrl := fmt.Sprintf("%s/universe/races/", configuration.AppConfig.Esi.Default.Url)
-        redisKey := "RaceByID:" + strconv.Itoa(*id)
+        redisKey := raceRedisKey + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
@@ -1178,7 +1180,7 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;races); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return nil, err
         }</span>
         <span class="cov0" title="0">for _, race := range races </span><span class="cov0" title="0">{
@@ -1189,9 +1191,9 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
                 }</span>
                 <span class="cov0" title="0">raceBytes, err := json.Marshal(*race)
                 if err == nil </span><span class="cov0" title="0">{
-                        RedisClient.AddToRedisCache("RaceByID:"+strconv.Itoa(*race.RaceID), raceBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache(raceRedisKey+strconv.Itoa(*race.RaceID), raceBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
-                        log.Errorf("Failure Marshalling: %v", err)
+                        log.Errorf(helpers.FailureMarshaling, err)
                 }</span>
         }
         <span class="cov0" title="0">return returnRace, nil</span>
@@ -1212,7 +1214,7 @@ func RegionByID(id *int) (*model.Region, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;region); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return region, err
         }</span>
 
@@ -1234,7 +1236,7 @@ func StarByID(id *int) (*model.Star, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;star); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return star, err
         }</span>
 
@@ -1269,7 +1271,7 @@ func StargateByID(id *int) (*model.Stargate, error) <span class="cov0" title="0"
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;stargate); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return stargate, err
         }</span>
 
@@ -1307,7 +1309,7 @@ func StationByID(id *int) (*model.Station, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;station); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return station, err
         }</span>
 
@@ -1342,7 +1344,7 @@ func SystemByID(id *int) (*model.System, error) <span class="cov0" title="0">{
         }</span>
 
         <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;system); err != nil </span><span class="cov0" title="0">{
-                log.WithFields(log.Fields{"id": id}).Errorf("Could not unmarshal reponseBytes. %v", err)
+                log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return system, err
         }</span>
 
