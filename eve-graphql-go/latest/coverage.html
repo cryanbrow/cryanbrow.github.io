@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (51.9%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (53.2%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -689,15 +689,15 @@ const bloodlineRedisKey string = "BloodlineByID:"
 const factionRedisKey string = "FactionByID:"
 const raceRedisKey string = "RaceByID:"
 
-func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov8" title="6">{
+func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov7" title="6">{
         var ancestry *model.Ancestry = new(model.Ancestry)
         var err error
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov7" title="5">inCache, result := RedisClient.CheckRedisCache(ancestryRedisKey + strconv.Itoa(*id))
-        if !inCache </span><span class="cov5" title="3">{
+        <span class="cov6" title="5">inCache, result := RedisClient.CheckRedisCache(ancestryRedisKey + strconv.Itoa(*id))
+        if !inCache </span><span class="cov4" title="3">{
                 ancestry, err = ancestryByArray(id)
                 if err != nil </span><span class="cov3" title="2">{
                         return nil, err
@@ -714,7 +714,7 @@ func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov8" title="6"
         }
 }
 
-func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov5" title="3">{
+func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov4" title="3">{
         var ancestries []*model.Ancestry = make([]*model.Ancestry, 0)
         var returnAncestry *model.Ancestry
         var redisKey = ancestryRedisKey + strconv.Itoa(*id)
@@ -748,7 +748,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov5" title=
 
 func AsteroidBeltDetails(asteroidBelts []*int) ([]*model.AsteroidBelt, error) <span class="cov3" title="2">{
         asteroidBeltDetails := make([]*model.AsteroidBelt, 0)
-        for _, element := range asteroidBelts </span><span class="cov5" title="3">{
+        for _, element := range asteroidBelts </span><span class="cov4" title="3">{
                 asteroidBelt, err := AsteroidBeltByID(element)
                 if err == nil </span><span class="cov3" title="2">{
                         asteroidBeltDetails = append(asteroidBeltDetails, asteroidBelt)
@@ -760,12 +760,12 @@ func AsteroidBeltDetails(asteroidBelts []*int) ([]*model.AsteroidBelt, error) <s
         return asteroidBeltDetails, nil</span>
 }
 
-func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov8" title="7">{
+func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov7" title="7">{
         var asteroidBelt *model.AsteroidBelt = new(model.AsteroidBelt)
         if id == nil </span><span class="cov3" title="2">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov7" title="5">baseUrl := fmt.Sprintf("%s/universe/asteroid_belts/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov6" title="5">baseUrl := fmt.Sprintf("%s/universe/asteroid_belts/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := asteroidBeltRedisKey + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
@@ -773,26 +773,26 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov8" t
         if err != nil </span><span class="cov1" title="1">{
                 return asteroidBelt, err
         }</span>
-        <span class="cov6" title="4">log.Debug(string(responseBytes))
+        <span class="cov5" title="4">log.Debug(string(responseBytes))
 
         if err := json.Unmarshal(responseBytes, &amp;asteroidBelt); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return asteroidBelt, err
         }</span>
-        <span class="cov5" title="3">log.Debug(*asteroidBelt.Name)
+        <span class="cov4" title="3">log.Debug(*asteroidBelt.Name)
 
         return asteroidBelt, nil</span>
 }
 
-func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov8" title="6">{
+func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov7" title="6">{
         var bloodline *model.Bloodline = new(model.Bloodline)
         var err error
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov7" title="5">inCache, result := RedisClient.CheckRedisCache(bloodlineRedisKey + strconv.Itoa(*id))
-        if !inCache </span><span class="cov5" title="3">{
+        <span class="cov6" title="5">inCache, result := RedisClient.CheckRedisCache(bloodlineRedisKey + strconv.Itoa(*id))
+        if !inCache </span><span class="cov4" title="3">{
                 bloodline, err = bloodlineByArray(id)
                 if err != nil </span><span class="cov3" title="2">{
                         return nil, err
@@ -809,7 +809,7 @@ func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov8" title="
         }
 }
 
-func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov5" title="3">{
+func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov4" title="3">{
         var bloodlines []*model.Bloodline = make([]*model.Bloodline, 0)
         var returnBloodline *model.Bloodline
         baseUrl := fmt.Sprintf("%s/universe/bloodlines/", configuration.AppConfig.Esi.Default.Url)
@@ -841,12 +841,12 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov5" titl
         <span class="cov1" title="1">return returnBloodline, nil</span>
 }
 
-func CategoryByID(id *int) (*model.Category, error) <span class="cov6" title="4">{
+func CategoryByID(id *int) (*model.Category, error) <span class="cov5" title="4">{
         var category *model.Category = new(model.Category)
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov5" title="3">baseUrl := fmt.Sprintf("%s/universe/categories/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov4" title="3">baseUrl := fmt.Sprintf("%s/universe/categories/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "CategoryByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
@@ -865,7 +865,7 @@ func CategoryByID(id *int) (*model.Category, error) <span class="cov6" title="4"
 
 func ConstellationsByIDs(ids []*int) ([]*model.Constellation, error) <span class="cov3" title="2">{
         constellationDetails := make([]*model.Constellation, 0)
-        for _, element := range ids </span><span class="cov5" title="3">{
+        for _, element := range ids </span><span class="cov4" title="3">{
                 constellation, err := ConstellationByID(element)
                 if err == nil </span><span class="cov3" title="2">{
                         constellationDetails = append(constellationDetails, constellation)
@@ -876,12 +876,12 @@ func ConstellationsByIDs(ids []*int) ([]*model.Constellation, error) <span class
         <span class="cov1" title="1">return constellationDetails, nil</span>
 }
 
-func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov8" title="7">{
+func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov7" title="7">{
         var constellation *model.Constellation = new(model.Constellation)
         if id == nil </span><span class="cov3" title="2">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov7" title="5">baseUrl := fmt.Sprintf("%s/universe/constellations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov6" title="5">baseUrl := fmt.Sprintf("%s/universe/constellations/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "ConstellationByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
@@ -890,22 +890,22 @@ func ConstellationByID(id *int) (*model.Constellation, error) <span class="cov8"
                 return constellation, err
         }</span>
 
-        <span class="cov6" title="4">if err := json.Unmarshal(responseBytes, &amp;constellation); err != nil </span><span class="cov1" title="1">{
+        <span class="cov5" title="4">if err := json.Unmarshal(responseBytes, &amp;constellation); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return constellation, err
         }</span>
 
-        <span class="cov5" title="3">return constellation, nil</span>
+        <span class="cov4" title="3">return constellation, nil</span>
 }
 
-func FactionByID(id *int) (*model.Faction, error) <span class="cov8" title="6">{
+func FactionByID(id *int) (*model.Faction, error) <span class="cov7" title="6">{
         var faction *model.Faction = new(model.Faction)
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov7" title="5">inCache, result := RedisClient.CheckRedisCache(factionRedisKey + strconv.Itoa(*id))
-        if !inCache </span><span class="cov5" title="3">{
+        <span class="cov6" title="5">inCache, result := RedisClient.CheckRedisCache(factionRedisKey + strconv.Itoa(*id))
+        if !inCache </span><span class="cov4" title="3">{
                 faction, err := factionByArray(id)
                 if err != nil </span><span class="cov3" title="2">{
                         return nil, err
@@ -922,7 +922,7 @@ func FactionByID(id *int) (*model.Faction, error) <span class="cov8" title="6">{
         }
 }
 
-func factionByArray(id *int) (*model.Faction, error) <span class="cov5" title="3">{
+func factionByArray(id *int) (*model.Faction, error) <span class="cov4" title="3">{
         var factions []*model.Faction = make([]*model.Faction, 0)
         var returnFaction *model.Faction
         baseUrl := fmt.Sprintf("%s/universe/factions/", configuration.AppConfig.Esi.Default.Url)
@@ -954,12 +954,12 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov5" title="3
         <span class="cov1" title="1">return returnFaction, nil</span>
 }
 
-func GraphicByID(id *int) (*model.Graphic, error) <span class="cov6" title="4">{
+func GraphicByID(id *int) (*model.Graphic, error) <span class="cov5" title="4">{
         var graphic *model.Graphic = new(model.Graphic)
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov5" title="3">baseUrl := fmt.Sprintf("%s/universe/graphics/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov4" title="3">baseUrl := fmt.Sprintf("%s/universe/graphics/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "GraphicByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
@@ -976,12 +976,12 @@ func GraphicByID(id *int) (*model.Graphic, error) <span class="cov6" title="4">{
         <span class="cov1" title="1">return graphic, nil</span>
 }
 
-func GroupByID(id *int) (*model.Group, error) <span class="cov6" title="4">{
+func GroupByID(id *int) (*model.Group, error) <span class="cov5" title="4">{
         var group *model.Group = new(model.Group)
         if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov5" title="3">baseUrl := fmt.Sprintf("%s/universe/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov4" title="3">baseUrl := fmt.Sprintf("%s/universe/groups/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "GroupByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
@@ -998,13 +998,13 @@ func GroupByID(id *int) (*model.Group, error) <span class="cov6" title="4">{
         <span class="cov1" title="1">return group, nil</span>
 }
 
-func IdForName(name *string, nameType string) (int, error) <span class="cov10" title="9">{
+func IdForName(name *string, nameType string) (int, error) <span class="cov10" title="13">{
         var ids *local_model.Names = new(local_model.Names)
         baseUrl := fmt.Sprintf("%s/universe/ids/", configuration.AppConfig.Esi.Default.Url)
-        if name == nil </span><span class="cov0" title="0">{
+        if name == nil </span><span class="cov1" title="1">{
                 return 0, errors.New("nil name")
         }</span>
-        <span class="cov10" title="9">redisKey := "IDForName:" + *name
+        <span class="cov9" title="12">redisKey := "IDForName:" + *name
         singleItemArray := []string{*name}
 
         var buf bytes.Buffer
@@ -1014,17 +1014,17 @@ func IdForName(name *string, nameType string) (int, error) <span class="cov10" t
                 return 0, err
         }</span>
 
-        <span class="cov10" title="9">responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodPost, buf, nil, redisKey)
-        if err != nil </span><span class="cov0" title="0">{
+        <span class="cov9" title="12">responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodPost, buf, nil, redisKey)
+        if err != nil </span><span class="cov1" title="1">{
                 return 0, err
         }</span>
 
-        <span class="cov10" title="9">if err := json.Unmarshal(responseBytes, &amp;ids); err != nil </span><span class="cov0" title="0">{
+        <span class="cov9" title="11">if err := json.Unmarshal(responseBytes, &amp;ids); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"name": *name}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return 0, err
         }</span>
 
-        <span class="cov10" title="9">switch nameType </span>{
+        <span class="cov9" title="10">switch nameType </span>{
         case local_model.AGENTS:<span class="cov1" title="1">
                 return *ids.Agents[0].ID, nil</span>
         case local_model.ALLIANCES:<span class="cov1" title="1">
@@ -1043,7 +1043,7 @@ func IdForName(name *string, nameType string) (int, error) <span class="cov10" t
                 return *ids.Regions[0].ID, nil</span>
         case local_model.SYSTEMS:<span class="cov1" title="1">
                 return *ids.Systems[0].ID, nil</span>
-        default:<span class="cov0" title="0">
+        default:<span class="cov1" title="1">
                 return 0, errors.New("all fields nil")</span>
         }
 
