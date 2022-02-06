@@ -996,7 +996,7 @@ func GroupByID(id *int) (*model.Group, error) <span class="cov7" title="4">{
         <span class="cov1" title="1">return group, nil</span>
 }
 
-func IdForName(name *string, name_type string) (int, error) <span class="cov0" title="0">{
+func IdForName(name *string, nameType string) (int, error) <span class="cov0" title="0">{
         var ids *local_model.Names = new(local_model.Names)
         baseUrl := fmt.Sprintf("%s/universe/ids/", configuration.AppConfig.Esi.Default.Url)
         if name == nil </span><span class="cov0" title="0">{
@@ -1022,7 +1022,7 @@ func IdForName(name *string, name_type string) (int, error) <span class="cov0" t
                 return 0, err
         }</span>
 
-        <span class="cov0" title="0">switch name_type </span>{
+        <span class="cov0" title="0">switch nameType </span>{
         case local_model.AGENTS:<span class="cov0" title="0">
                 return *ids.Agents[0].ID, nil</span>
         case local_model.ALLIANCES:<span class="cov0" title="0">
