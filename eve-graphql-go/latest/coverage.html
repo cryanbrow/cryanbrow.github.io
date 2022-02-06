@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (78.9%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (82.2%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -1221,26 +1221,26 @@ func RegionByID(id *int) (*model.Region, error) <span class="cov5" title="4">{
         <span class="cov1" title="1">return region, nil</span>
 }
 
-func StarByID(id *int) (*model.Star, error) <span class="cov0" title="0">{
+func StarByID(id *int) (*model.Star, error) <span class="cov5" title="4">{
         var star *model.Star = new(model.Star)
-        if id == nil </span><span class="cov0" title="0">{
+        if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/stars/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov4" title="3">baseUrl := fmt.Sprintf("%s/universe/stars/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "StarByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return star, err
         }</span>
 
-        <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;star); err != nil </span><span class="cov0" title="0">{
+        <span class="cov3" title="2">if err := json.Unmarshal(responseBytes, &amp;star); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return star, err
         }</span>
 
-        <span class="cov0" title="0">return star, nil</span>
+        <span class="cov1" title="1">return star, nil</span>
 }
 
 func StargateDetails(stargates []*int) ([]*model.Stargate, error) <span class="cov0" title="0">{
