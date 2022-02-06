@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (66.7%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (75.6%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -1141,32 +1141,32 @@ func PlanetByID(id *int) (*model.Planet, error) <span class="cov5" title="4">{
         <span class="cov1" title="1">return planet, nil</span>
 }
 
-func RaceByID(id *int) (*model.Race, error) <span class="cov0" title="0">{
+func RaceByID(id *int) (*model.Race, error) <span class="cov7" title="6">{
         var race *model.Race = new(model.Race)
         var err error
-        if id == nil </span><span class="cov0" title="0">{
-                return nil, nil
+        if id == nil </span><span class="cov1" title="1">{
+                return nil, errors.New(helpers.NilId)
         }</span>
 
-        <span class="cov0" title="0">inCache, result := RedisClient.CheckRedisCache(raceRedisKey + strconv.Itoa(*id))
-        if !inCache </span><span class="cov0" title="0">{
+        <span class="cov6" title="5">inCache, result := RedisClient.CheckRedisCache(raceRedisKey + strconv.Itoa(*id))
+        if !inCache </span><span class="cov4" title="3">{
                 race, err = raceByArray(id)
-                if err != nil </span><span class="cov0" title="0">{
+                if err != nil </span><span class="cov3" title="2">{
                         return nil, err
-                }</span> else<span class="cov0" title="0"> {
+                }</span> else<span class="cov1" title="1"> {
                         return race, nil
                 }</span>
-        } else<span class="cov0" title="0"> {
-                if err := json.Unmarshal(result, &amp;race); err != nil </span><span class="cov0" title="0">{
+        } else<span class="cov3" title="2"> {
+                if err := json.Unmarshal(result, &amp;race); err != nil </span><span class="cov1" title="1">{
                         log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                         return race, err
-                }</span> else<span class="cov0" title="0"> {
+                }</span> else<span class="cov1" title="1"> {
                         return race, nil
                 }</span>
         }
 }
 
-func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
+func raceByArray(id *int) (*model.Race, error) <span class="cov4" title="3">{
         var races []*model.Race = make([]*model.Race, 0)
         var returnRace *model.Race
         var headers http.Header = nil
@@ -1175,28 +1175,28 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
 
         var buffer bytes.Buffer
         responseBytes, headers, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;races); err != nil </span><span class="cov0" title="0">{
+        <span class="cov3" title="2">if err := json.Unmarshal(responseBytes, &amp;races); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return nil, err
         }</span>
-        <span class="cov0" title="0">for _, race := range races </span><span class="cov0" title="0">{
+        <span class="cov1" title="1">for _, race := range races </span><span class="cov1" title="1">{
                 log.Info(*race.Name)
-                if *race.RaceID == *id </span><span class="cov0" title="0">{
+                if *race.RaceID == *id </span><span class="cov1" title="1">{
                         returnRace = race
                         log.Info("Found Race ID")
                 }</span>
-                <span class="cov0" title="0">raceBytes, err := json.Marshal(*race)
-                if err == nil </span><span class="cov0" title="0">{
+                <span class="cov1" title="1">raceBytes, err := json.Marshal(*race)
+                if err == nil </span><span class="cov1" title="1">{
                         RedisClient.AddToRedisCache(raceRedisKey+strconv.Itoa(*race.RaceID), raceBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf(helpers.FailureMarshaling, err)
                 }</span>
         }
-        <span class="cov0" title="0">return returnRace, nil</span>
+        <span class="cov1" title="1">return returnRace, nil</span>
 }
 
 func RegionByID(id *int) (*model.Region, error) <span class="cov0" title="0">{
@@ -1464,10 +1464,10 @@ import (
         log "github.com/sirupsen/logrus"
 )
 
-func EsiTtlToMillis(esiTime string) int64 <span class="cov10" title="8">{
+func EsiTtlToMillis(esiTime string) int64 <span class="cov10" title="9">{
         log.WithFields(log.Fields{"time": esiTime}).Debugf("Parsing Time : %s", esiTime)
         t, err := time.Parse(time.RFC1123, esiTime)
-        if err != nil </span><span class="cov9" title="7">{
+        if err != nil </span><span class="cov9" title="8">{
                 log.WithFields(log.Fields{"time": esiTime}).Errorf("Failed to Parse Time with Error : %v", err)
                 return 43200000
         }</span>
