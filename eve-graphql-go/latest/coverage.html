@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (46.3%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (46.6%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -687,10 +687,10 @@ const ancestryRedisKey string = "AncestryByID:"
 const asteroidBeltRedisKey string = "AsteroidBeltByID:"
 const bloodlineRedisKey string = "BloodlineByID:"
 
-func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov10" title="7">{
+func AncestryByID(id *int) (*model.Ancestry, error) <span class="cov9" title="6">{
         var ancestry *model.Ancestry = new(model.Ancestry)
         var err error
-        if id == nil </span><span class="cov4" title="2">{
+        if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
 
@@ -736,7 +736,7 @@ func ancestryByArray(id *int) (*model.Ancestry, error) <span class="cov6" title=
                 }</span>
                 <span class="cov1" title="1">ancestryBytes, err := json.Marshal(*ancestry)
                 if err == nil </span><span class="cov1" title="1">{
-                        RedisClient.AddToRedisCache(ancestryRedisKey+strconv.Itoa(*ancestry.ID), ancestryBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache(ancestryRedisKey+strconv.Itoa(*ancestry.ID), ancestryBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
@@ -782,11 +782,11 @@ func AsteroidBeltByID(id *int) (*model.AsteroidBelt, error) <span class="cov10" 
         return asteroidBelt, nil</span>
 }
 
-func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov8" title="5">{
+func BloodlineByID(id *int) (*model.Bloodline, error) <span class="cov9" title="6">{
         var bloodline *model.Bloodline = new(model.Bloodline)
         var err error
-        if id == nil </span><span class="cov0" title="0">{
-                return nil, nil
+        if id == nil </span><span class="cov1" title="1">{
+                return nil, errors.New(helpers.NilId)
         }</span>
 
         <span class="cov8" title="5">inCache, result := RedisClient.CheckRedisCache(bloodlineRedisKey + strconv.Itoa(*id))
@@ -831,7 +831,7 @@ func bloodlineByArray(id *int) (*model.Bloodline, error) <span class="cov6" titl
                 }</span>
                 <span class="cov1" title="1">bloodlineBytes, err := json.Marshal(*bloodline)
                 if err == nil </span><span class="cov1" title="1">{
-                        RedisClient.AddToRedisCache(bloodlineRedisKey+strconv.Itoa(*bloodline.BloodlineID), bloodlineBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache(bloodlineRedisKey+strconv.Itoa(*bloodline.BloodlineID), bloodlineBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
@@ -944,7 +944,7 @@ func factionByArray(id *int) (*model.Faction, error) <span class="cov6" title="3
                 }</span>
                 <span class="cov1" title="1">factionBytes, err := json.Marshal(*faction)
                 if err == nil </span><span class="cov1" title="1">{
-                        RedisClient.AddToRedisCache("FactionByID:"+strconv.Itoa(*faction.FactionID), factionBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache("FactionByID:"+strconv.Itoa(*faction.FactionID), factionBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
@@ -1189,7 +1189,7 @@ func raceByArray(id *int) (*model.Race, error) <span class="cov0" title="0">{
                 }</span>
                 <span class="cov0" title="0">raceBytes, err := json.Marshal(*race)
                 if err == nil </span><span class="cov0" title="0">{
-                        RedisClient.AddToRedisCache("RaceByID:"+strconv.Itoa(*race.RaceID), raceBytes, helpers.ESI_ttl_to_millis(headers.Get("expires")))
+                        RedisClient.AddToRedisCache("RaceByID:"+strconv.Itoa(*race.RaceID), raceBytes, helpers.EsiTtlToMillis(headers.Get("expires")))
                 }</span> else<span class="cov0" title="0"> {
                         log.Errorf("Failure Marshalling: %v", err)
                 }</span>
@@ -1387,7 +1387,7 @@ type RestHelperClient struct {
 }
 
 func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body bytes.Buffer, additionalQueryParams []configuration.Key_value, redisQueryKey string) ([]byte, http.Header, error) <span class="cov7" title="8">{
-        inCache, result := Redis_client.CheckRedisCache(redisQueryKey)
+        inCache, result := RedisClientVar.CheckRedisCache(redisQueryKey)
         if !inCache </span><span class="cov7" title="7">{
                 crest_url, err := url.Parse(baseUrl)
                 if err != nil </span><span class="cov1" title="1">{
@@ -1427,7 +1427,7 @@ func (r *RestHelperClient) MakeCachingRESTCall(baseUrl string, verb string, body
                         log.WithFields(log.Fields{"url": url}).Errorf("Could not read response for body. : %v", err)
                         return make([]byte, 0), nil, err
                 }</span>
-                <span class="cov4" title="3">Redis_client.AddToRedisCache(redisQueryKey, responseBytes, ESI_ttl_to_millis(h.Get("expires")))
+                <span class="cov4" title="3">RedisClientVar.AddToRedisCache(redisQueryKey, responseBytes, EsiTtlToMillis(h.Get("expires")))
                 return responseBytes, h, nil</span>
         }
         <span class="cov1" title="1">return result, nil, nil</span>
@@ -1443,13 +1443,13 @@ type RedisClient interface {
 }
 
 var (
-        Client       HTTPClient
-        Redis_client RedisClient
+        Client         HTTPClient
+        RedisClientVar RedisClient
 )
 
 func SetupRestHelper() <span class="cov0" title="0">{
         Client = &amp;http.Client{}
-        Redis_client = &amp;cache.Client{}
+        RedisClientVar = &amp;cache.Client{}
 }</span>
 </pre>
 		
@@ -1462,11 +1462,11 @@ import (
         log "github.com/sirupsen/logrus"
 )
 
-func ESI_ttl_to_millis(esi_time string) int64 <span class="cov10" title="8">{
-        log.WithFields(log.Fields{"time": esi_time}).Debugf("Parsing Time : %s", esi_time)
-        t, err := time.Parse(time.RFC1123, esi_time)
+func EsiTtlToMillis(esiTime string) int64 <span class="cov10" title="8">{
+        log.WithFields(log.Fields{"time": esiTime}).Debugf("Parsing Time : %s", esiTime)
+        t, err := time.Parse(time.RFC1123, esiTime)
         if err != nil </span><span class="cov9" title="7">{
-                log.WithFields(log.Fields{"time": esi_time}).Errorf("Failed to Parse Time with Error : %v", err)
+                log.WithFields(log.Fields{"time": esiTime}).Errorf("Failed to Parse Time with Error : %v", err)
                 return 43200000
         }</span>
 
