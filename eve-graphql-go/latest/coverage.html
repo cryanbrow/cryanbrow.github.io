@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/market/market_rest.go (0.0%)</option>
 				
-				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (63.4%)</option>
+				<option value="file8">github.com/cryanbrow/eve-graphql-go/graph/data_access/esi/universe/universe_rest.go (66.7%)</option>
 				
 				<option value="file9">github.com/cryanbrow/eve-graphql-go/graph/helpers/rest_helper.go (88.6%)</option>
 				
@@ -1119,26 +1119,26 @@ func MoonByID(id *int) (*model.Moon, error) <span class="cov7" title="7">{
         <span class="cov4" title="3">return moon, nil</span>
 }
 
-func PlanetByID(id *int) (*model.Planet, error) <span class="cov0" title="0">{
+func PlanetByID(id *int) (*model.Planet, error) <span class="cov5" title="4">{
         var planet *model.Planet = new(model.Planet)
-        if id == nil </span><span class="cov0" title="0">{
+        if id == nil </span><span class="cov1" title="1">{
                 return nil, errors.New(helpers.NilId)
         }</span>
-        <span class="cov0" title="0">baseUrl := fmt.Sprintf("%s/universe/planets/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
+        <span class="cov4" title="3">baseUrl := fmt.Sprintf("%s/universe/planets/%s/", configuration.AppConfig.Esi.Default.Url, strconv.Itoa(*id))
         redisKey := "PlanetByID:" + strconv.Itoa(*id)
 
         var buffer bytes.Buffer
         responseBytes, _, err := restHelper.MakeCachingRESTCall(baseUrl, http.MethodGet, buffer, nil, redisKey)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return planet, err
         }</span>
 
-        <span class="cov0" title="0">if err := json.Unmarshal(responseBytes, &amp;planet); err != nil </span><span class="cov0" title="0">{
+        <span class="cov3" title="2">if err := json.Unmarshal(responseBytes, &amp;planet); err != nil </span><span class="cov1" title="1">{
                 log.WithFields(log.Fields{"id": id}).Errorf(helpers.CouldNotUnmarshalResponseBytes, err)
                 return planet, err
         }</span>
 
-        <span class="cov0" title="0">return planet, nil</span>
+        <span class="cov1" title="1">return planet, nil</span>
 }
 
 func RaceByID(id *int) (*model.Race, error) <span class="cov0" title="0">{
