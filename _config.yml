@@ -28,7 +28,7 @@ twitter_username: Ordocorvi
 github_username:  cryanbrow
 
 # Build settings
-theme: jekyll-theme-minimal
+theme: jekyll-theme-tactile
 plugins:
   - jekyll-feed
   - jekyll-paginate
